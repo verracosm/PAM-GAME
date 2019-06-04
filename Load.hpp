@@ -1,11 +1,11 @@
-#ifndef MY_STD_IN_H
-#define MY_STD_IN_H
+#ifndef LOAD_H
+#define LOAD_H
 
 #include <iostream>
 #include <vector>
 #include <string>
 
-class MyStdIn
+class Load
 {
 public:
 	const static int readNextInt();

@@ -1,11 +1,11 @@
-#ifndef GAME_OPTIONS_MANAGER_H
-#define GAME_OPTIONS_MANAGER_H
+#ifndef OPTIONS_H
+#define OPTIONS_H
 
 #include <string>
 #include <stdexcept>
 
 
-class GameOptionsManager
+class Options
 {
 public:
 	enum GameParticipant
@@ -13,8 +13,8 @@ public:
 		COMPUTER = -1, NONE = 0, HUMAN = 1
 	};
 
-	static GameOptionsManager* getInstance();
-	~GameOptionsManager() {};
+	static Options* getInstance();
+	~Options() {};
 
 	void switchHumanAndComputerChar();
 
@@ -69,12 +69,12 @@ private:
 	char computerChar = DEFAULT_COMPUTER_CHAR;
 
 	// Singleton
-	static GameOptionsManager *instance;				//wsk na obiekt klasy
-	GameOptionsManager() {};
-	GameOptionsManager(const GameOptionsManager&) = delete;
-	GameOptionsManager& operator=(const GameOptionsManager&) = delete;
+	static Options *instance;				//pointer
+	Options() {};
+	Options(const Options&) = delete;
+	Options& operator=(const Options&) = delete;
 };
 
-typedef GameOptionsManager::GameParticipant Participant;
+typedef Options::GameParticipant Participant;
 
 #endif

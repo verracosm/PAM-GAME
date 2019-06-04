@@ -1,23 +1,23 @@
 #include "pch.h"
-#include "BoardManager.hpp"
+#include "Board.hpp"
 
-BoardManager* BoardManager::instance = nullptr;
+Board* Board::instance = nullptr;
 
-BoardManager* BoardManager::getInstance()
+Board* Board::getInstance()
 {
 	if (instance == nullptr)
 	{
-		instance = new BoardManager();
+		instance = new Board();
 	}
 	return instance;
 }
 
-BoardManager::BoardManager()
+Board::Board()
 {
 	resetEverySlotAndSetSize(gameOptionsManager->getBoardSize());
 }
 
-void BoardManager::resetEverySlotAndSetSize(const int NEW_BOARD_SIZE)
+void Board::resetEverySlotAndSetSize(const int NEW_BOARD_SIZE)
 {
 	// Try to set up new size
 	gameOptionsManager->setBoardSize(NEW_BOARD_SIZE);
@@ -38,12 +38,12 @@ void BoardManager::resetEverySlotAndSetSize(const int NEW_BOARD_SIZE)
 	}
 }
 
-void BoardManager::resetEverySlot()
+void Board::resetEverySlot()
 {
 	resetEverySlotAndSetSize(gameOptionsManager->getBoardSize());
 }
 
-void BoardManager::resetSlot(const Coordinates& COORDINATES)
+void Board::resetSlot(const Coordinates& COORDINATES)
 {
 	const bool IS_VALID = (isSlotEmpty(COORDINATES) == false);
 	if (IS_VALID)
@@ -53,7 +53,7 @@ void BoardManager::resetSlot(const Coordinates& COORDINATES)
 	}
 }
 
-const bool BoardManager::addNewCharacter(const Coordinates& COORDINATES, const Participant& PLAYER)
+const bool Board::addNewCharacter(const Coordinates& COORDINATES, const Participant& PLAYER)
 {
 	if (PLAYER != Participant::HUMAN && PLAYER != Participant::COMPUTER)
 	{
@@ -71,22 +71,22 @@ const bool BoardManager::addNewCharacter(const Coordinates& COORDINATES, const P
 	return false;
 }
 
-const bool BoardManager::isSlotEmpty(const Coordinates& COORDINATES) const
+const bool Board::isSlotEmpty(const Coordinates& COORDINATES) const
 {
 	return (board[COORDINATES.getRow()][COORDINATES.getColumn()] == gameOptionsManager->getCharAssignedTo(Participant::NONE));
 }
 
-const bool BoardManager::isAnyEmptySlot() const
+const bool Board::isAnyEmptySlot() const
 {
 	return quantityOfTakenSlots < gameOptionsManager->getBoardSize() * gameOptionsManager->getBoardSize();
 }
 
-const int BoardManager::getQuantityOfTakenSlots() const
+const int Board::getQuantityOfTakenSlots() const
 {
 	return quantityOfTakenSlots;
 }
 
-std::vector<Coordinates> BoardManager::getEveryEmptySlotCoordinates() const
+std::vector<Coordinates> Board::getEveryEmptySlotCoordinates() const
 {
 	std::vector<Coordinates> emptySlots;
 	const int BOARD_SIZE = gameOptionsManager->getBoardSize();
@@ -104,7 +104,7 @@ std::vector<Coordinates> BoardManager::getEveryEmptySlotCoordinates() const
 	return emptySlots;
 }
 
-void BoardManager::printBoard() const
+void Board::printBoard() const
 {
 	const int BOARD_SIZE = gameOptionsManager->getBoardSize();
 	// print index on the top
@@ -143,10 +143,9 @@ void BoardManager::printBoard() const
 	std::cout << "+" << std::endl;
 }
 
+//find winner algorithm  
 
-#pragma region findWinner algorithm 
-
-const Participant BoardManager::findWinner() const
+const Participant Board::findWinner() const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int BOARD_SIZE = gameOptionsManager->getBoardSize();
@@ -220,12 +219,12 @@ const Participant BoardManager::findWinner() const
 
 // EAST:
 
-const bool BoardManager::isPossibleToCheckEastSlots(const Coordinates& COORDINATES) const
+const bool Board::isPossibleToCheckEastSlots(const Coordinates& COORDINATES) const
 {
 	return (COORDINATES.getColumn() + gameOptionsManager->getPointsRequiredForVictory()<=gameOptionsManager->getBoardSize());
 }
 
-const bool BoardManager::areEastSlotsNotEmpty(const Coordinates& COORDINATES) const
+const bool Board::areEastSlotsNotEmpty(const Coordinates& COORDINATES) const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int ROW = COORDINATES.getRow();
@@ -241,7 +240,7 @@ const bool BoardManager::areEastSlotsNotEmpty(const Coordinates& COORDINATES) co
 	return true;
 }
 
-const bool BoardManager::areEastSlotsContainWinState(const Coordinates& COORDINATES) const
+const bool Board::areEastSlotsContainWinState(const Coordinates& COORDINATES) const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int ROW = COORDINATES.getRow();
@@ -260,14 +259,14 @@ const bool BoardManager::areEastSlotsContainWinState(const Coordinates& COORDINA
 
 // SOUTH:
 
-const bool BoardManager::isPossibleToCheckSouthSlots(const Coordinates& COORDINATES) const
+const bool Board::isPossibleToCheckSouthSlots(const Coordinates& COORDINATES) const
 {
 	return (COORDINATES.getRow() + gameOptionsManager->getPointsRequiredForVictory()
 		<=
 		gameOptionsManager->getBoardSize());
 }
 
-const bool BoardManager::areSouthSlotsNotEmpty(const Coordinates& COORDINATES) const
+const bool Board::areSouthSlotsNotEmpty(const Coordinates& COORDINATES) const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int ROW = COORDINATES.getRow();
@@ -283,7 +282,7 @@ const bool BoardManager::areSouthSlotsNotEmpty(const Coordinates& COORDINATES) c
 	return true;
 }
 
-const bool BoardManager::areSouthSlotsContainWinState(const Coordinates& COORDINATES) const
+const bool Board::areSouthSlotsContainWinState(const Coordinates& COORDINATES) const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int ROW = COORDINATES.getRow();
@@ -302,7 +301,7 @@ const bool BoardManager::areSouthSlotsContainWinState(const Coordinates& COORDIN
 
 // EAST-SOUTH:
 
-const bool BoardManager::areEastSouthSlotsNotEmpty(const Coordinates& COORDINATES) const
+const bool Board::areEastSouthSlotsNotEmpty(const Coordinates& COORDINATES) const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int ROW = COORDINATES.getRow();
@@ -318,7 +317,7 @@ const bool BoardManager::areEastSouthSlotsNotEmpty(const Coordinates& COORDINATE
 	return true;
 }
 
-const bool BoardManager::areEastSouthSlotsContainWinState(const Coordinates& COORDINATES) const
+const bool Board::areEastSouthSlotsContainWinState(const Coordinates& COORDINATES) const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int ROW = COORDINATES.getRow();
@@ -337,14 +336,14 @@ const bool BoardManager::areEastSouthSlotsContainWinState(const Coordinates& COO
 
 // WEST-SOUTH:
 
-const bool BoardManager::isPossibleToCheckWestSlots(const Coordinates& COORDINATES) const
+const bool Board::isPossibleToCheckWestSlots(const Coordinates& COORDINATES) const
 {
 	return (COORDINATES.getColumn() - gameOptionsManager->getPointsRequiredForVictory() >= -1
 		&&
 		COORDINATES.getColumn() < gameOptionsManager->getBoardSize());
 }
 
-const bool BoardManager::areWestSouthSlotsNotEmpty(const Coordinates& COORDINATES) const
+const bool Board::areWestSouthSlotsNotEmpty(const Coordinates& COORDINATES) const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int ROW = COORDINATES.getRow();
@@ -360,7 +359,7 @@ const bool BoardManager::areWestSouthSlotsNotEmpty(const Coordinates& COORDINATE
 	return true;
 }
 
-const bool BoardManager::areWestSouthSlotsContainWinState(const Coordinates& COORDINATES) const
+const bool Board::areWestSouthSlotsContainWinState(const Coordinates& COORDINATES) const
 {
 	const int POINTS_REQUIRED_FOR_VICTORY = gameOptionsManager->getPointsRequiredForVictory();
 	const int ROW = COORDINATES.getRow();
@@ -376,4 +375,4 @@ const bool BoardManager::areWestSouthSlotsContainWinState(const Coordinates& COO
 	}
 	return howManyEqualPairs == (POINTS_REQUIRED_FOR_VICTORY - 1);
 }
-#pragma endregion
+

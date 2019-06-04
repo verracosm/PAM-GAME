@@ -1,7 +1,7 @@
 #ifndef COORDINATES_H
 #define COORDINATES_H
 
-#include "GameOptionsManager.hpp"
+#include "Options.hpp"
 
 class Coordinates
 {
@@ -16,7 +16,8 @@ public:
 	const int getColumn() const;
 
 private:
-	GameOptionsManager *gameOptionsManager = GameOptionsManager::getInstance();
+
+	Options *gameOptionsManager = Options::getInstance();
 
 	int row;
 	int column;

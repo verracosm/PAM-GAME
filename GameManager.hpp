@@ -2,7 +2,7 @@
 #define GAME_MANAGER_H
 
 #include "MinMaxManager.hpp"
-#include "MyStdIn.hpp"
+#include "Load.hpp"
 
 
 class GameManager
@@ -38,8 +38,8 @@ private:
 	const static std::string EIGHT_SPACE_BARS;
 
 	MinMaxManager *minMaxManager = MinMaxManager::getInstance();
-	BoardManager *boardManager = BoardManager::getInstance();
-	GameOptionsManager *gameOptionsManager = GameOptionsManager::getInstance();
+	Board *boardManager = Board::getInstance();
+	Options *gameOptionsManager = Options::getInstance();
 
 	// Singleton
 	static GameManager *instance;

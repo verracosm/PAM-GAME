@@ -18,7 +18,7 @@ void MinMaxManager::executeTheBestComputerMove()
 
 	const int INITIAL_DEPTH = 0;
 
-	// in case computer starting the game, just pick (0,0) slot. this one is the best first move, in my opinion.
+	// in case computer starting the game, just pick (0,0) slot. 
 	if (boardManager->getQuantityOfTakenSlots() == 0)
 	{
 		theBestMoveCoordinates = Coordinates(0, 0);

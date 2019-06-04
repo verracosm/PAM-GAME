@@ -17,16 +17,14 @@ GameManager* GameManager::getInstance()
 void GameManager::run()
 {
 	std::cout << "Welcome in game Tic Tac Toe!\n";
-	std::cout << "You are facing unconquerable oponent, which use Min-Max algorithm + Alpha & Beta pruning + Dynamic depth limiting in game-tree searching, to calculate next move.\n";
-	std::cout << "You can try as much as you wish, but the best what you can get is a draw.\n";
-	std::cout << "I would wish you good luck, but it is not going to help any way.\n";
+	
 
-	MainMenuDecision mainMenuDecision;
-	OptionMenuDecision optionsMenuDecision;
+	MainMenuDecision mainMenuDecision;					//enum	
+	OptionMenuDecision optionsMenuDecision;				//enum
 	do
 	{
 		printMainMenu();
-		mainMenuDecision = getMainMenuDecision(MyStdIn::readNextIntFromValidScope(1, 3));
+		mainMenuDecision = getMainMenuDecision(Load::readNextIntFromValidScope(1, 3));
 		switch (mainMenuDecision)
 		{
 		case PLAY:
@@ -37,13 +35,13 @@ void GameManager::run()
 			do
 			{
 				printOptionsMenu();
-				optionsMenuDecision = getOptionMenuDecision(MyStdIn::readNextIntFromValidScope(1, 5));
+				optionsMenuDecision = getOptionMenuDecision(Load::readNextIntFromValidScope(1, 5));
 				executeOptionsDecision(optionsMenuDecision);
 			} while (optionsMenuDecision != EXIT_OPTIONS);
 			break;
 
 		case EXIT:
-			std::cout << "Bye bye !\nThank you for playing my game, psobow!\n";
+			std::cout << "Thank you for good game!\n";
 			break;
 
 		default:
@@ -147,10 +145,10 @@ Coordinates GameManager::askAndReadValidHumanCoordinatesDecision() const
 	do
 	{
 		std::cout << "Enter ROW: ";
-		row = MyStdIn::readNextIntFromValidScope(0, lastValidIndex);
+		row = Load::readNextIntFromValidScope(0, lastValidIndex);
 
 		std::cout << "Enter COLUMN: ";
-		column = MyStdIn::readNextIntFromValidScope(0, lastValidIndex);
+		column = Load::readNextIntFromValidScope(0, lastValidIndex);
 
 		if (boardManager->isSlotEmpty(Coordinates(row, column)))
 		{
@@ -171,7 +169,7 @@ bool GameManager::askAndReadToPlayAgain() const
 {
 	std::vector<char> validChars{ 'Y', 'y', 'N', 'n' };
 	std::cout << "Do you want to play again? Y/y = Yes or N/n = No\nEnter choice: ";
-	char enteredChar = MyStdIn::readNextCharWithValidation(validChars);
+	char enteredChar = Load::readNextCharWithValidation(validChars);
 
 	return (enteredChar == 'Y' || enteredChar == 'y') ? true : false;
 }
@@ -241,7 +239,7 @@ void GameManager::executeOptionsDecision(const GameManager::OptionMenuDecision& 
 			<< "Minimal board size: " << MIN_BOARD_SIZE
 			<< " maximum board size: " << MAX_BOARD_SIZE << "\n";
 		std::cout << EIGHT_SPACE_BARS << EIGHT_SPACE_BARS << "Enter choice: ";
-		boardManager->resetEverySlotAndSetSize(MyStdIn::readNextIntFromValidScope(MIN_BOARD_SIZE, MAX_BOARD_SIZE));
+		boardManager->resetEverySlotAndSetSize(Load::readNextIntFromValidScope(MIN_BOARD_SIZE, MAX_BOARD_SIZE));
 		break;
 
 	case SET_POINTS_FOR_VICTORY:
@@ -250,7 +248,7 @@ void GameManager::executeOptionsDecision(const GameManager::OptionMenuDecision& 
 			<< " maximum amount of points: " << MAX_POINTS_FOR_VICTORY << "\n";
 		std::cout << EIGHT_SPACE_BARS << EIGHT_SPACE_BARS << "Enter choice: ";
 		gameOptionsManager->setPointsRequiredForVictory(
-			MyStdIn::readNextIntFromValidScope(MIN_POINTS_FOR_VICTORY, MAX_POINTS_FOR_VICTORY));
+			Load::readNextIntFromValidScope(MIN_POINTS_FOR_VICTORY, MAX_POINTS_FOR_VICTORY));
 		break;
 
 	case EXIT_OPTIONS:

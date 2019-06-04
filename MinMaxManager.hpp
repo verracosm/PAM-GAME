@@ -1,13 +1,12 @@
 #ifndef MINMAX_MANAGER_H
 #define MINMAX_MANAGER_H
 
-#include "BoardManager.hpp"
+#include "Board.hpp"
 #include <algorithm> // for function std::max
 #include <chrono> // for time measurement
 
 class MinMaxManager
 {
-	friend class MinMaxManagerTestSuite;
 public:
 	static MinMaxManager* getInstance();
 	~MinMaxManager() {};
@@ -19,10 +18,10 @@ private:
 	const int HIGHEST_SCORE = 1000;
 	const int LOWEST_SCORE = -1000;
 
-	Coordinates theBestMoveCoordinates; // this field must be synchronized in multi-thread algorithm
+	Coordinates theBestMoveCoordinates;								// this field must be synchronized in multi-thread algorithm
 
-	GameOptionsManager *gameOptionsManager = GameOptionsManager::getInstance();
-	BoardManager *boardManager = BoardManager::getInstance();
+	Options *gameOptionsManager = Options::getInstance();
+	Board *boardManager = Board::getInstance();
 
 	// Singleton
 	static MinMaxManager *instance;

@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "MyStdIn.hpp"
+#include "Load.hpp"
 
 
-const int MyStdIn::readNextInt()
+const int Load::readNextInt()
 {
 	int number = 0;
 	std::string inputLine;
@@ -28,7 +28,7 @@ const int MyStdIn::readNextInt()
 	return number;
 }
 
-const int MyStdIn::readNextIntFromValidScope(const int BOTTOM, const int TOP)
+const int Load::readNextIntFromValidScope(const int BOTTOM, const int TOP)
 {
 	int number = 0;
 	bool isValid;
@@ -49,7 +49,7 @@ const int MyStdIn::readNextIntFromValidScope(const int BOTTOM, const int TOP)
 	return number;
 }
 
-const char MyStdIn::readNextCharWithValidation(const std::vector<char> VALID_CHARS)
+const char Load::readNextCharWithValidation(const std::vector<char> VALID_CHARS)
 {
 	std::string inputLine;
 	bool isValid;
@@ -74,7 +74,7 @@ const char MyStdIn::readNextCharWithValidation(const std::vector<char> VALID_CHA
 	return inputLine[0];
 }
 
-const bool MyStdIn::isVectorContainChar(const std::vector<char> VEC, const char CHARACTER)
+const bool Load::isVectorContainChar(const std::vector<char> VEC, const char CHARACTER)
 {
 	for (unsigned int i = 0; i < VEC.size(); i++)
 	{

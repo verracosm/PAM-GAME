@@ -1,18 +1,17 @@
-#ifndef BOARD_MANAGER_H
-#define BOARD_MANAGER_H
+#ifndef BOARD_H
+#define BOARD_H
 
 #include <iostream>
 #include <vector>
 
 #include "Coordinates.hpp"
-#include "GameOptionsManager.hpp"
+#include "Options.hpp"
 
-class BoardManager
+class Board
 {
-	friend class BoardManagerTestSuite;
 public:
-	static BoardManager* getInstance();
-	~BoardManager() {};
+	static Board* getInstance();
+	~Board() {};
 
 	void resetEverySlotAndSetSize(const int NEW_BOARD_SIZE);
 	void resetEverySlot();
@@ -31,17 +30,16 @@ private:
 	std::vector<std::vector<char>> board;
 	int quantityOfTakenSlots;
 
-	GameOptionsManager *gameOptionsManager = GameOptionsManager::getInstance();
+	Options *gameOptionsManager = Options::getInstance();
 
 	// Singleton
-	static BoardManager *instance;
-	BoardManager();
-	BoardManager(const BoardManager&) = delete;
-	BoardManager& operator=(const BoardManager&) = delete;
+	static Board *instance;
+	Board();
+	Board(const Board&) = delete;
+	Board& operator=(const Board&) = delete;
 
 
 	// TODO: implement algorithm with multi threads.
-#pragma region findWinner algorithm
 // EAST:
 	const bool isPossibleToCheckEastSlots(const Coordinates& COORDINATES) const;
 	const bool areEastSlotsNotEmpty(const Coordinates& COORDINATES) const;
@@ -60,7 +58,6 @@ private:
 	const bool isPossibleToCheckWestSlots(const Coordinates& COORDINATES) const;
 	const bool areWestSouthSlotsNotEmpty(const Coordinates& COORDINATES) const;
 	const bool areWestSouthSlotsContainWinState(const Coordinates& COORDINATES) const;
-#pragma endregion
 };
 
 #endif

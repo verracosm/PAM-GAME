@@ -1,31 +1,30 @@
 #include "pch.h"
-#include "GameOptionsManager.hpp"
+#include "Options.hpp"
 
-GameOptionsManager* GameOptionsManager::instance = nullptr;
+Options* Options::instance = nullptr;
 
-GameOptionsManager* GameOptionsManager::getInstance()
+Options* Options::getInstance()
 {
 	if (instance == nullptr)
 	{
-		instance = new GameOptionsManager();
+		instance = new Options();
 	}
 	return instance;
 }
 
-void GameOptionsManager::setGameStartingPlayer(const GameParticipant& PLAYER)
+void Options::setGameStartingPlayer(const GameParticipant& PLAYER)
 {
 	gameStartingPlayer = PLAYER;
-
 }
 
-void GameOptionsManager::switchHumanAndComputerChar()
+void Options::switchHumanAndComputerChar()
 {
 	char tempHumanChar = humanChar;
 	humanChar = computerChar;
 	computerChar = tempHumanChar;
 }
 
-void GameOptionsManager::setPointsRequiredForVictory(const int NEW_POINTS)										//ustawianie iloœci znaków wymaganych do zwyciêstwa z obs³ug¹ b³êdów z bib. except
+void Options::setPointsRequiredForVictory(const int NEW_POINTS)										
 {
 	if (NEW_POINTS < MIN_POINTS_FOR_VICTORY || NEW_POINTS > boardSize)
 	{
@@ -36,7 +35,7 @@ void GameOptionsManager::setPointsRequiredForVictory(const int NEW_POINTS)						
 	pointsRequiredForVictory = NEW_POINTS;
 }
 
-void GameOptionsManager::setBoardSize(const int NEW_BOARD_SIZE)													//ustawianie wielkosci planszy i obs³uga b³êdów
+void Options::setBoardSize(const int NEW_BOARD_SIZE)													
 {
 	if (NEW_BOARD_SIZE < MIN_BOARD_SIZE || NEW_BOARD_SIZE > MAX_BOARD_SIZE)
 	{
@@ -46,7 +45,7 @@ void GameOptionsManager::setBoardSize(const int NEW_BOARD_SIZE)													//us
 	boardSize = NEW_BOARD_SIZE;
 }
 
-const Participant GameOptionsManager::getEnumAssignedTo(const char CHAR) const
+const Participant Options::getEnumAssignedTo(const char CHAR) const
 {
 	if ((CHAR != EMPTY_SLOT_CHAR) && (CHAR != humanChar) && (CHAR != computerChar))
 	{
@@ -68,7 +67,7 @@ const Participant GameOptionsManager::getEnumAssignedTo(const char CHAR) const
 	}
 }
 
-const char GameOptionsManager::getCharAssignedTo(const Participant& PLAYER) const
+const char Options::getCharAssignedTo(const Participant& PLAYER) const
 {
 	if (PLAYER == NONE)
 	{
@@ -84,7 +83,7 @@ const char GameOptionsManager::getCharAssignedTo(const Participant& PLAYER) cons
 	}
 }
 
-const int GameOptionsManager::getDepthBound(const int BOARD_SIZE) const
+const int Options::getDepthBound(const int BOARD_SIZE) const
 {
 	switch (BOARD_SIZE)
 	{
@@ -118,36 +117,36 @@ const int GameOptionsManager::getDepthBound(const int BOARD_SIZE) const
 	throw std::invalid_argument("Invalid argument. Recived argument = " + std::to_string(BOARD_SIZE) + "\n");
 }
 
-const Participant GameOptionsManager::getGameStartingPlayer() const
+const Participant Options::getGameStartingPlayer() const
 {
 	return gameStartingPlayer;
 }
 
-const Participant GameOptionsManager::getOppositePlayer(const Participant& PLAYER) const
+const Participant Options::getOppositePlayer(const Participant& PLAYER) const
 {
 	return static_cast<Participant>(PLAYER*(-1));
 }
 
-const int GameOptionsManager::getPointsRequiredForVictory() const
+const int Options::getPointsRequiredForVictory() const
 {
 	return pointsRequiredForVictory;
 }
-const int GameOptionsManager::getBoardSize() const
+const int Options::getBoardSize() const
 {
 	return boardSize;
 }
 
-const int GameOptionsManager::getMinBoardSize() const
+const int Options::getMinBoardSize() const
 {
 	return MIN_BOARD_SIZE;
 }
 
-const int GameOptionsManager::getMinPointsForVictory() const
+const int Options::getMinPointsForVictory() const
 {
 	return MIN_POINTS_FOR_VICTORY;
 }
 
-const int GameOptionsManager::getMaxBoardSize() const
+const int Options::getMaxBoardSize() const
 {
 	return MAX_BOARD_SIZE;
 }
